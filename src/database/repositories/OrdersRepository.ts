@@ -1,8 +1,14 @@
 import AppError from '../../utils/AppError';
+import Customers from '../models/CustomersModel';
 import model, {OrdersInput, OrdersOutput} from '../models/OrdersModel';
+import Products from '../models/ProductsModel';
 
-export const getAll = async (): Promise<OrdersOutput[]> => {
+export const getAll = async (): Promise<OrdersOutput[]> => {    
     return await model.findAll();
+};
+
+export const getAllNested = async (): Promise<OrdersOutput[]> => {    
+    return await model.findAll({include: [{model: Customers}]});
 };
 
 export const getByID = async (id: number): Promise<OrdersOutput> => {

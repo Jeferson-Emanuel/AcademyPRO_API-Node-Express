@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import {sequelize} from '../sequelize';
-import Orders from './OrdersModel';
+import Employees from './EmployeesModel';
 
 export interface CustomersAttibutes {
     customerNumber: number;
@@ -9,16 +9,16 @@ export interface CustomersAttibutes {
     contactFirstName: string;
     phone: string;
     addressLine1: string;
-    addressLine2: string;
+    addressLine2?: string;
     city: string;
-    state: string;
-    postalCode: string;
+    state?: string;
+    postalCode?: string;
     country: string;
-    salesRepEmployeeNumber: number;
-    creditLimit: number
+    salesRepEmployeeNumber?: number;
+    creditLimit?: number
 };
 
-export interface CustomersInput extends Optional<CustomersAttibutes, 'addressLine2'|'state'|'postalCode'|'salesRepEmployeeNumber'|'creditLimit'>{};
+export interface CustomersInput extends Optional<CustomersAttibutes, 'customerNumber'>{};
 export interface CustomersOutput extends Required<CustomersAttibutes>{};
 
 class Customers extends Model<CustomersAttibutes, CustomersInput>{
@@ -39,23 +39,24 @@ class Customers extends Model<CustomersAttibutes, CustomersInput>{
 
 Customers.init({
     customerNumber: {type: DataTypes.INTEGER, primaryKey: true},
-    customerName: {type: DataTypes.STRING},
-    contactLastName: {type: DataTypes.STRING},
-    contactFirstName: {type: DataTypes.STRING},
-    phone: {type: DataTypes.STRING},
-    addressLine1: {type: DataTypes.STRING},
-    addressLine2: {type: DataTypes.STRING},
-    city: {type: DataTypes.STRING},
-    state: {type: DataTypes.STRING},
-    postalCode: {type: DataTypes.STRING},
-    country: {type: DataTypes.STRING},
+    customerName: {type: DataTypes.STRING(50), allowNull: false},
+    contactLastName: {type: DataTypes.STRING(50), allowNull: false},
+    contactFirstName: {type: DataTypes.STRING(50), allowNull: false},
+    phone: {type: DataTypes.STRING(50), allowNull: false},
+    addressLine1: {type: DataTypes.STRING(50), allowNull: false},
+    addressLine2: {type: DataTypes.STRING(50)},
+    city: {type: DataTypes.STRING(50), allowNull: false},
+    state: {type: DataTypes.STRING(50)},
+    postalCode: {type: DataTypes.STRING(15)},
+    country: {type: DataTypes.STRING(50), allowNull: false},
     salesRepEmployeeNumber: {type: DataTypes.INTEGER},
-    creditLimit: {type: DataTypes.FLOAT},
+    creditLimit: {type: DataTypes.FLOAT(10,2)},
 }, {
     sequelize, //Connection name
     modelName: 'customers' //Table name
 });
 
-//Customers.hasMany(Orders);
+Employees.hasMany(Customers, {foreignKey: 'salesRepEmployeeNumber'});
+Customers.belongsTo(Employees, {as: 'salesman', foreignKey: 'salesRepEmployeeNumber'});
 
 export default Customers;

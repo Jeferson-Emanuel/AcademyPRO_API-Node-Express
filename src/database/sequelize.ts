@@ -17,4 +17,6 @@ export default () => {
     }).catch((error: Error) => {
         console.log(`Connection error: ${error}`);
     });
+
+    //sequelize.sync();
 };

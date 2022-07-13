@@ -5,6 +5,10 @@ export const getAll = async (): Promise<OrderDetOutput[]> => {
     return await repository.getAll();
 };
 
+export const getAllNested = async (): Promise<OrderDetOutput[]> => {
+    return await repository.getAllNested();
+};
+
 export const getByID = async (id: number): Promise<OrderDetOutput> => {
     return await repository.getByID(id);
 };

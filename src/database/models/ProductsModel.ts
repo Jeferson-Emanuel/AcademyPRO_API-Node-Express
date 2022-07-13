@@ -1,5 +1,6 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import {sequelize} from '../sequelize';
+import ProductLines from './ProductLinesModel';
 
 export interface ProductsAttibutes {
     productCode: string;
@@ -13,7 +14,7 @@ export interface ProductsAttibutes {
     MSRP: number;
 };
 
-export interface ProductsInput extends Required<ProductsAttibutes>{};
+export interface ProductsInput extends Optional<ProductsAttibutes, 'productCode'>{};
 export interface ProductsOutput extends Required<ProductsAttibutes>{};
 
 class Products extends Model<ProductsAttibutes, ProductsInput>{
@@ -29,18 +30,21 @@ class Products extends Model<ProductsAttibutes, ProductsInput>{
 };
 
 Products.init({
-    productCode: {type: DataTypes.STRING, primaryKey: true},
-    productName: {type: DataTypes.STRING},
-    productLine: {type: DataTypes.STRING},
-    productScale: {type: DataTypes.STRING},
-    productVendor: {type: DataTypes.STRING},
-    productDescription: {type: DataTypes.TEXT},
-    quantityInStock: {type: DataTypes.SMALLINT},
-    buyPrice: {type: DataTypes.FLOAT},
-    MSRP: {type: DataTypes.FLOAT},
+    productCode: {type: DataTypes.STRING(15), primaryKey: true},
+    productName: {type: DataTypes.STRING(70), allowNull: false},
+    productLine: {type: DataTypes.STRING(50), allowNull: false},
+    productScale: {type: DataTypes.STRING(10), allowNull: false},
+    productVendor: {type: DataTypes.STRING(50), allowNull: false},
+    productDescription: {type: DataTypes.TEXT, allowNull: false},
+    quantityInStock: {type: DataTypes.SMALLINT, allowNull: false},
+    buyPrice: {type: DataTypes.FLOAT(10,2), allowNull: false},
+    MSRP: {type: DataTypes.FLOAT(10,2), allowNull: false},
 }, {
     sequelize, //Connection name
     modelName: 'products' //Table name
 });
+
+ProductLines.hasMany(Products, {foreignKey: 'productLine'});
+Products.belongsTo(ProductLines, {foreignKey: 'productLine'})
 
 export default Products;

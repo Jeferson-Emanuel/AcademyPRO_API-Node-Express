@@ -6,14 +6,14 @@ export interface OfficesAttibutes {
     city: string;
     phone: string;
     addressLine1: string;
-    addressLine2: string;
-    state: string;
+    addressLine2?: string;
+    state?: string;
     country: string;
     postalCode: string;
     territory: string;
 };
 
-export interface OfficesInput extends Optional<OfficesAttibutes, 'addressLine2'|'state'>{};
+export interface OfficesInput extends Optional<OfficesAttibutes, 'officeCode'>{};
 export interface OfficesOutput extends Required<OfficesAttibutes>{};
 
 class Offices extends Model<OfficesAttibutes, OfficesInput>{
@@ -29,15 +29,15 @@ class Offices extends Model<OfficesAttibutes, OfficesInput>{
 };
 
 Offices.init({
-    officeCode: {type: DataTypes.STRING, primaryKey: true},
-    city: {type: DataTypes.STRING},
-    phone: {type: DataTypes.STRING},
-    addressLine1: {type: DataTypes.STRING},
-    addressLine2: {type: DataTypes.STRING},
-    state: {type: DataTypes.STRING},
-    country: {type: DataTypes.STRING},
-    postalCode: {type: DataTypes.STRING},
-    territory: {type: DataTypes.STRING},
+    officeCode: {type: DataTypes.STRING(10), primaryKey: true},
+    city: {type: DataTypes.STRING(50), allowNull: false},
+    phone: {type: DataTypes.STRING(50), allowNull: false},
+    addressLine1: {type: DataTypes.STRING(50), allowNull: false},
+    addressLine2: {type: DataTypes.STRING(50)},
+    state: {type: DataTypes.STRING(50)},
+    country: {type: DataTypes.STRING(50), allowNull: false},
+    postalCode: {type: DataTypes.STRING(15), allowNull: false},
+    territory: {type: DataTypes.STRING(10), allowNull: false},
 }, {
     sequelize, //Connection name
     modelName: 'offices' //Table name

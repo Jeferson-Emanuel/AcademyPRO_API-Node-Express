@@ -5,6 +5,14 @@ export const getAll = async (): Promise<EmployeesOutput[]> => {
     return await repository.getAll();
 };
 
+export const getAllNested = async (): Promise<EmployeesOutput[]> => {
+    return await repository.getAllNested();
+};
+
+export const getAllReports = async (): Promise<EmployeesOutput[]> => {
+    return await repository.getAllReports();
+};
+
 export const getByID = async (id: number): Promise<EmployeesOutput> => {
     return await repository.getByID(id);
 };

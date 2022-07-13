@@ -5,6 +5,7 @@ import { OrdersCreateValidation, OrdersUpdateValidation } from '../validations/O
 const router = Router();
 
 router.get('/', controller.getAll);
+router.get('/nested', controller.getAllNested);
 router.get('/:id', controller.getByID);
 router.post('/', OrdersCreateValidation, controller.create);
 router.put('/:id', OrdersUpdateValidation, controller.updateByID);
