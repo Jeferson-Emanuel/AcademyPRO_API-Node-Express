@@ -1,10 +1,29 @@
 import AppError from '../../utils/AppError';
+import Customers from '../models/CustomersModel';
 import model, {PaymentsInput, PaymentsOutput} from '../models/PaymentsModel';
 
-export const getAll = async (): Promise<PaymentsOutput[]> => {
+/* export const getAll = async (): Promise<PaymentsOutput[]> => {
     return await model.findAll();
+}; */
+
+export const getAll = async (): Promise<PaymentsOutput[]> => {
+    return await model.findAll({
+        include: Customers
+    });
 };
 
+export const getByID = async (id: string): Promise<PaymentsOutput> => {
+    const payments = await model.findOne({
+        where: {'checkNumber': id},
+        include: Customers
+    });
+
+    if(!payments){
+        throw new AppError('NotFoundError', 'Register not found.', 404);
+    }
+    return payments;
+};
+/* 
 export const getByID = async (id: string): Promise<PaymentsOutput> => {
     const payments = await model.findOne({
         where: {'checkNumber': id}
@@ -14,7 +33,7 @@ export const getByID = async (id: string): Promise<PaymentsOutput> => {
         throw new AppError('NotFoundError', 'Register not found.', 404);
     }
     return payments;
-};
+}; */
 
 export const create = async (payload: PaymentsInput): Promise<PaymentsOutput> => {
     return await model.create(payload);

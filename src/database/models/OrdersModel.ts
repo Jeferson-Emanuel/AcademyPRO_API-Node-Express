@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import {sequelize} from '../sequelize';
 import Customers from './CustomersModel';
+import OrderDet from './OrderDetModel';
 
 export interface OrdersAttibutes {
     orderNumber: number;
@@ -38,7 +39,7 @@ Orders.init({
     modelName: 'orders' //Table name
 });
 
-Orders.belongsTo(Customers, {foreignKey: 'customerNumber'});
+Orders.belongsTo(Customers, {foreignKey: 'customerNumber', onDelete: 'CASCADE'});
 Customers.hasMany(Orders, {foreignKey: 'customerNumber'});
 
 export default Orders;

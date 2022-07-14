@@ -20,10 +20,10 @@ class Payments extends Model<PaymentsAttibutes, PaymentsInput>{
 };
 
 Payments.init({
-    customerNumber: {type: DataTypes.INTEGER, primaryKey: true},
+    customerNumber: {type: DataTypes.INTEGER, allowNull: false},
     checkNumber: {type: DataTypes.STRING(50), primaryKey: true},
     paymentDate: {type: DataTypes.DATE, allowNull: false},
-    amount: {type: DataTypes.FLOAT(10,2), allowNull: false},
+    amount: {type: DataTypes.DECIMAL(10,2), allowNull: false},
 }, {
     sequelize, //Connection name
     modelName: 'payments' //Table name

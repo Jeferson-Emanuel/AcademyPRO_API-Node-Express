@@ -5,10 +5,9 @@ import { OrderDetCreateValidation, OrderDetUpdateValidation } from '../validatio
 const router = Router();
 
 router.get('/', controller.getAll);
-router.get('/nested', controller.getAllNested);
-router.get('/:id', controller.getByID);
+/* router.get('/:id', controller.getByID);
 router.post('/', OrderDetCreateValidation, controller.create);
 router.put('/:id', OrderDetUpdateValidation, controller.updateByID);
-router.delete('/:id', controller.deleteByID);
+router.delete('/:id', controller.deleteByID); */
 
 export default router;

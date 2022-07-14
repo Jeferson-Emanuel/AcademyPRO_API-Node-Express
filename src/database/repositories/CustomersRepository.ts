@@ -2,17 +2,28 @@ import AppError from '../../utils/AppError';
 import model, {CustomersInput, CustomersOutput} from '../models/CustomersModel';
 import Employees from '../models/EmployeesModel';
 
-export const getAll = async (): Promise<CustomersOutput[]> => {
+/* export const getAll = async (): Promise<CustomersOutput[]> => {
     return await model.findAll();
+}; */
+
+export const getAll = async (): Promise<CustomersOutput[]> => {
+    return await model.findAll({include: {all: true}});
 };
 
-export const getAllNested = async (): Promise<CustomersOutput[]> => {
-    return await model.findAll({attributes: {exclude: ['salesRepEmployeeNumber']},
-    include: [{model: Employees, as: 'salesman'}]});
-};
+/* export const getByID = async (id: number): Promise<CustomersOutput> => {
+    const customer = await model.findByPk(id);
+
+    if(!customer){
+        throw new AppError('NotFoundError', 'Register not found.', 404);
+    }
+    return customer;
+}; */
 
 export const getByID = async (id: number): Promise<CustomersOutput> => {
-    const customer = await model.findByPk(id);
+    const customer = await model.findOne({
+        where: {customerNumber: id},
+        include: { all: true, nested: true },
+    });
 
     if(!customer){
         throw new AppError('NotFoundError', 'Register not found.', 404);

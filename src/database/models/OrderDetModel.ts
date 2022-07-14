@@ -23,17 +23,25 @@ class OrderDet extends Model<OrderDetAttibutes, OrderDetInput>{
 };
 
 OrderDet.init({
-    orderNumber: {type: DataTypes.INTEGER, primaryKey: true},
-    productCode: {type: DataTypes.STRING(15), primaryKey: true},
+    orderNumber: {type: DataTypes.INTEGER, allowNull: false},
+    productCode: {type: DataTypes.STRING(15), allowNull: false},
     quantityOrdered: {type: DataTypes.INTEGER, allowNull: false},
-    priceEach: {type: DataTypes.FLOAT(10,2), allowNull: false},
+    priceEach: {type: DataTypes.DECIMAL(10,2), allowNull: false},
     orderLineNumber: {type: DataTypes.SMALLINT, allowNull: false},
 }, {
     sequelize, //Connection name
     modelName: 'orderdetails' //Table name
 });
 
-Products.belongsToMany(Orders, {through: 'OrderDet', foreignKey: 'productCode'});
-Orders.belongsToMany(Products, {through: 'OrderDet', foreignKey: 'orderNumber'});
+OrderDet.removeAttribute('id');
+
+OrderDet.belongsTo(Orders, {foreignKey: 'orderNumber'});
+Orders.hasMany(OrderDet, {as: 'order details', foreignKey: 'orderNumber'});
+
+OrderDet.belongsTo(Products, {foreignKey: 'productCode'});
+Products.hasMany(OrderDet, {as: 'order details', foreignKey: 'productCode'});
+
+Orders.belongsToMany(Products, {foreignKey: 'orderNumber', through: OrderDet});
+Products.belongsToMany(Orders, {foreignKey: 'productCode', through: OrderDet, onUpdate: 'NO ACTION'});
 
 export default OrderDet;

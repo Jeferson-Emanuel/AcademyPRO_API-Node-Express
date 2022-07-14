@@ -6,17 +6,20 @@ export const sequelize = new Sequelize('classicmodels', 'root', '123456', {
     dialect: 'mysql',
     define: {
         freezeTableName: true,
-        timestamps: false
+        //timestamps: false
+        createdAt: false,
+        updatedAt: false
     },
-    logging: false
+    logging: false,
+    timezone: '-03:00'
 });
 
-export default () => {
-    sequelize.authenticate().then(() => {
+export const connectDatabase = async () => {
+    await sequelize.authenticate().then(() => {
         console.log('Database connected successfully.');
     }).catch((error: Error) => {
         console.log(`Connection error: ${error}`);
     });
-
-    //sequelize.sync();
 };
+
+export default sequelize;

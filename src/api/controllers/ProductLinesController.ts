@@ -5,7 +5,7 @@ export const getAll = async (req: Request, res: Response) => {
     res.send(await service.getAll());
 };
 
-export const getByID = async (req: Request, res: Response, next: NextFunction) => {
+export const getByID = async (req: Request, res: Response, next: NextFunction) => {    
     res.send(await service.getByID(req.params.id));
 };
 

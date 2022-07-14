@@ -38,12 +38,13 @@ Employees.init({
     jobTitle: {type: DataTypes.STRING(50), allowNull: false},
 }, {
     sequelize, //Connection name
-    modelName: 'employees' //Table name
+    modelName: 'employees', //Table name
+    paranoid: true
 });
 
 Offices.hasMany(Employees, {foreignKey: 'officeCode'});
-Employees.belongsTo(Offices, {as: 'office', foreignKey: 'officeCode'});
-Employees.hasOne(Employees, {as: 'reports to', foreignKey: 'reportsTo'});
+Employees.belongsTo(Offices, {foreignKey: 'officeCode'});
+Employees.hasOne(Employees, {foreignKey: 'reportsTo', onDelete: 'SET NULL'});
 Employees.belongsTo(Employees, {foreignKey: 'reportsTo'});
 
 export default Employees;

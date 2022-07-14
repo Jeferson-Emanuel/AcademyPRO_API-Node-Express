@@ -40,7 +40,8 @@ Offices.init({
     territory: {type: DataTypes.STRING(10), allowNull: false},
 }, {
     sequelize, //Connection name
-    modelName: 'offices' //Table name
+    modelName: 'offices', //Table name
+    paranoid: true
 });
 
 export default Offices;

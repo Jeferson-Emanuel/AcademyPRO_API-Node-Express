@@ -41,7 +41,8 @@ Products.init({
     MSRP: {type: DataTypes.FLOAT(10,2), allowNull: false},
 }, {
     sequelize, //Connection name
-    modelName: 'products' //Table name
+    modelName: 'products', //Table name
+    paranoid: false
 });
 
 ProductLines.hasMany(Products, {foreignKey: 'productLine'});

@@ -1,12 +1,22 @@
 import AppError from '../../utils/AppError';
 import model, {ProductLinesInput, ProductLinesOutput} from '../models/ProductLinesModel';
-
+import Products from '../models/ProductsModel';
+/* 
 export const getAll = async (): Promise<ProductLinesOutput[]> => {
     return await model.findAll();
+}; */
+
+export const getAll = async (): Promise<ProductLinesOutput[]> => {
+    return await model.findAll({
+        include: Products
+    });
 };
 
 export const getByID = async (id: string): Promise<ProductLinesOutput> => {
-    const productline = await model.findByPk(id);
+    const productline = await model.findOne({
+        where: {productLine: id},
+        include: Products
+    });
 
     if(!productline){
         throw new AppError('NotFoundError', 'Register not found.', 404);
@@ -29,9 +39,9 @@ export const updateByID = async (id: string, payload: ProductLinesInput): Promis
 
 export const deleteByID = async (id: string): Promise<void> => {
     const productline = await model.findByPk(id);
-
+    
     if(!productline){
         throw new AppError('NotFoundError', 'Register not found.', 404);
-    }
+    }    
     await productline.destroy();
 };

@@ -3,9 +3,9 @@ import express, {NextFunction, Request, Response} from 'express';
 import "express-async-errors";
 import bodyParser from 'body-parser';
 
-import connection from './database/sequelize';
 import routes from './api/routes/index';
 import AppError from './utils/AppError';
+import { initdb } from './database/initdb';
 
 const app = express();
 const port = 4444;
@@ -34,4 +34,4 @@ app.listen(port, () => {
     console.log(`Server listening to ${port} port.`);    
 });
 
-connection();
+initdb();

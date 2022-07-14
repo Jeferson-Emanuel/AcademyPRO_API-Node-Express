@@ -5,14 +5,6 @@ export const getAll = async (req: Request, res: Response) => {
     res.send(await service.getAll());
 };
 
-export const getAllNested = async (req: Request, res: Response) => {
-    res.send(await service.getAllNested());
-};
-
-export const getAllReports = async (req: Request, res: Response) => {
-    res.send(await service.getAllReports());
-};
-
 export const getByID = async (req: Request, res: Response, next: NextFunction) => {
     res.send(await service.getByID(parseInt(req.params.id)));
 };

@@ -56,7 +56,7 @@ Customers.init({
     modelName: 'customers' //Table name
 });
 
-Employees.hasMany(Customers, {foreignKey: 'salesRepEmployeeNumber'});
-Customers.belongsTo(Employees, {as: 'salesman', foreignKey: 'salesRepEmployeeNumber'});
+Employees.hasMany(Customers, {foreignKey: 'salesRepEmployeeNumber', onDelete: 'SET NULL'});
+Customers.belongsTo(Employees, {foreignKey: 'salesRepEmployeeNumber'});
 
 export default Customers;

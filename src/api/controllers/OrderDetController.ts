@@ -5,7 +5,7 @@ export const getAll = async (req: Request, res: Response) => {
     res.send(await service.getAll());
 };
 
-export const getAllNested = async (req: Request, res: Response) => {
+/* export const getAllNested = async (req: Request, res: Response) => {
     res.send(await service.getAllNested());
 };
 
@@ -24,4 +24,4 @@ export const updateByID = async (req: Request, res: Response, next: NextFunction
 export const deleteByID = async (req: Request, res: Response, next: NextFunction) => {
     await service.deleteByID(parseInt(req.params.id));
     res.status(204).send();
-};
+}; */

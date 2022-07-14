@@ -6,11 +6,7 @@ import Products from '../models/ProductsModel';
 export const getAll = async (): Promise<OrderDetOutput[]> => {
     return await model.findAll();
 };
-
-export const getAllNested = async (): Promise<OrderDetOutput[]> => {
-    return await model.findAll({include: [{model: Orders}, {model: Products}]});
-};
-
+/* 
 export const getByID = async (id: number): Promise<OrderDetOutput> => {
     const orderdet = await model.findByPk(id);
 
@@ -40,4 +36,4 @@ export const deleteByID = async (id: number): Promise<void> => {
         throw new AppError('NotFoundError', 'Register not found.', 404);
     }
     await orderdet.destroy();
-};
+}; */

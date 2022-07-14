@@ -3,16 +3,28 @@ import Customers from '../models/CustomersModel';
 import model, {OrdersInput, OrdersOutput} from '../models/OrdersModel';
 import Products from '../models/ProductsModel';
 
-export const getAll = async (): Promise<OrdersOutput[]> => {    
+/* export const getAll = async (): Promise<OrdersOutput[]> => {    
     return await model.findAll();
-};
+}; */
 
-export const getAllNested = async (): Promise<OrdersOutput[]> => {    
-    return await model.findAll({include: [{model: Customers}]});
+export const getAll = async (): Promise<OrdersOutput[]> => {    
+    return await model.findAll({include: {all: true}});
 };
-
+/* 
 export const getByID = async (id: number): Promise<OrdersOutput> => {
     const order = await model.findByPk(id);
+
+    if(!order){
+        throw new AppError('NotFoundError', 'Register not found.', 404);
+    }
+    return order;
+}; */
+
+export const getByID = async (id: number): Promise<OrdersOutput> => {
+    const order = await model.findOne({
+        where: {orderNumber: id},
+        include: {all: true}
+    });
 
     if(!order){
         throw new AppError('NotFoundError', 'Register not found.', 404);

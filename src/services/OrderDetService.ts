@@ -5,7 +5,7 @@ export const getAll = async (): Promise<OrderDetOutput[]> => {
     return await repository.getAll();
 };
 
-export const getAllNested = async (): Promise<OrderDetOutput[]> => {
+/* export const getAllNested = async (): Promise<OrderDetOutput[]> => {
     return await repository.getAllNested();
 };
 
@@ -23,4 +23,4 @@ export const updateByID = async (id: number, payload: OrderDetInput): Promise<Or
 
 export const deleteByID = async (id: number): Promise<void> => {
     await repository.deleteByID(id);
-};
+}; */
