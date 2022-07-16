@@ -1,4 +1,4 @@
-import AppError from '../../utils/AppError';
+import AppError from '../../shared/utils/AppError';
 import model, {OrderDetInput, OrderDetOutput} from '../models/OrderDetModel';
 import Orders from '../models/OrdersModel';
 import Products from '../models/ProductsModel';

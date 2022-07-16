@@ -1,16 +1,38 @@
-import AppError from '../../utils/AppError';
+import { Op } from 'sequelize';
+import { Query } from '../../shared/types/pagination';
+import AppError from '../../shared/utils/AppError';
+import { getPagination } from '../../shared/utils/getPagination';
 import OrderDet from '../models/OrderDetModel';
 import ProductLines from '../models/ProductLinesModel';
 import model, {ProductsInput, ProductsOutput} from '../models/ProductsModel';
 
+//Original
 /* export const getAll = async (): Promise<ProductsOutput[]> => {
     return await model.findAll();
 }; */
 
-export const getAll = async (): Promise<ProductsOutput[]> => {
+//Classroom 15
+/* export const getAll = async (): Promise<ProductsOutput[]> => {
     return await model.findAll({
         //include: {all: true}
         include: [{model: ProductLines}, {model: OrderDet, as: 'order details'}]
+    });
+}; */
+
+export const getAll = async (minValue: number, maxValue: number, query: Query): Promise<{rows: ProductsOutput[], count: number}> => {
+    let {size, page, sort, order, ...filters} = query;
+
+    const id = 'productCode';
+    const {...pagination} = getPagination(id, query);
+
+    if(!minValue && !maxValue) [minValue, maxValue] = [0, 999999999];
+
+    return await model.findAndCountAll({
+        where: {
+            quantityInStock: {[Op.between]: [minValue, maxValue]},
+            ...filters
+        },
+        ...pagination
     });
 };
 /* 

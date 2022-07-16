@@ -1,14 +1,34 @@
-import AppError from '../../utils/AppError';
-import Customers from '../models/CustomersModel';
-import model, {OrdersInput, OrdersOutput} from '../models/OrdersModel';
-import Products from '../models/ProductsModel';
+import moment from 'moment';
+import { Op } from 'sequelize';
 
+import { Query } from '../../shared/types/pagination';
+import AppError from '../../shared/utils/AppError';
+import { getPagination } from '../../shared/utils/getPagination';
+import model, {OrdersInput, OrdersOutput} from '../models/OrdersModel';
+
+//Original
 /* export const getAll = async (): Promise<OrdersOutput[]> => {    
     return await model.findAll();
 }; */
 
-export const getAll = async (): Promise<OrdersOutput[]> => {    
+//Classwork 15
+/* export const getAll = async (): Promise<OrdersOutput[]> => {    
     return await model.findAll({include: {all: true}});
+}; */
+
+export const getAll = async (startDate: string, endDate: string, query: Query): Promise<{rows: OrdersOutput[], count: number}> => {
+    const id = 'orderNumber';
+    const {...pagination} = getPagination(id, query);
+
+    if(!startDate) startDate = '1000-01-01';
+    if(!endDate) endDate = '3000-12-31';
+
+    return await model.findAndCountAll({
+        where: {
+            orderDate: {[Op.between]: [startDate, endDate]}
+        },
+        ...pagination
+    });
 };
 /* 
 export const getByID = async (id: number): Promise<OrdersOutput> => {

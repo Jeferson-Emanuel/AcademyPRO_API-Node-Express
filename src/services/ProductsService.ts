@@ -1,8 +1,14 @@
 import {ProductsInput, ProductsOutput} from '../database/models/ProductsModel';
 import * as repository from '../database/repositories/ProductsRepository';
+import { Query } from '../shared/types/pagination';
 
-export const getAll = async (): Promise<ProductsOutput[]> => {
+//Original
+/* export const getAll = async (): Promise<ProductsOutput[]> => {
     return await repository.getAll();
+}; */
+
+export const getAll = async (minValue: number, maxValue: number, query: Query): Promise<{rows: ProductsOutput[], count: number}> => {
+    return await repository.getAll(minValue, maxValue, query);
 };
 
 export const getByID = async (id: string): Promise<ProductsOutput> => {

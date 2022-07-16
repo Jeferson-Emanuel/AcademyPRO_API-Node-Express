@@ -42,6 +42,6 @@ OrderDet.belongsTo(Products, {foreignKey: 'productCode'});
 Products.hasMany(OrderDet, {as: 'order details', foreignKey: 'productCode'});
 
 Orders.belongsToMany(Products, {foreignKey: 'orderNumber', through: OrderDet});
-Products.belongsToMany(Orders, {foreignKey: 'productCode', through: OrderDet, onUpdate: 'NO ACTION'});
+Products.belongsToMany(Orders, {foreignKey: 'productCode', through: OrderDet});
 
 export default OrderDet;

@@ -1,4 +1,4 @@
-import AppError from '../../utils/AppError';
+import AppError from '../../shared/utils/AppError';
 import Customers from '../models/CustomersModel';
 import model, {PaymentsInput, PaymentsOutput} from '../models/PaymentsModel';
 

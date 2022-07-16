@@ -1,13 +1,30 @@
-import AppError from '../../utils/AppError';
+import { Op } from 'sequelize';
+import { Query } from '../../shared/types/pagination';
+import AppError from '../../shared/utils/AppError';
+import { getPagination } from '../../shared/utils/getPagination';
 import model, {CustomersInput, CustomersOutput} from '../models/CustomersModel';
-import Employees from '../models/EmployeesModel';
 
 /* export const getAll = async (): Promise<CustomersOutput[]> => {
     return await model.findAll();
 }; */
 
-export const getAll = async (): Promise<CustomersOutput[]> => {
-    return await model.findAll({include: {all: true}});
+export const getAll = async (customerName: string, minValue: number, maxValue: number, query: Query): Promise<{rows:CustomersOutput[], count: number}> => {
+    let {size, page, sort, order, ...filters} =  query;
+
+    const id = 'customerNumber';
+    const {...pagination} = getPagination(id, query);
+
+    if(!customerName) customerName='';
+    if(!minValue && !maxValue) [minValue, maxValue] = [0, 999999999];
+
+    return await model.findAndCountAll({
+        where: {
+            customerName: {[Op.substring]: customerName},
+            creditLimit: {[Op.between]: [minValue, maxValue]},
+            ...filters
+        },
+        ...pagination
+    });
 };
 
 /* export const getByID = async (id: number): Promise<CustomersOutput> => {

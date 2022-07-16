@@ -1,4 +1,4 @@
-import AppError from '../../utils/AppError';
+import AppError from '../../shared/utils/AppError';
 import Employees from '../models/EmployeesModel';
 import model, {EmployeesInput, EmployeesOutput} from '../models/EmployeesModel';
 import Offices from '../models/OfficesModel';

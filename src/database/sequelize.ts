@@ -11,6 +11,11 @@ export const sequelize = new Sequelize('classicmodels', 'root', '123456', {
         updatedAt: false
     },
     logging: false,
+    /* dialectOptions: {//Change format of date handling        
+        useUTC: false,
+        dateStrings: true,
+        typeCast: true
+    }, */
     timezone: '-03:00'
 });
 

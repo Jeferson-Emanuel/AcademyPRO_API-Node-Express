@@ -22,7 +22,7 @@ class Payments extends Model<PaymentsAttibutes, PaymentsInput>{
 Payments.init({
     customerNumber: {type: DataTypes.INTEGER, allowNull: false},
     checkNumber: {type: DataTypes.STRING(50), primaryKey: true},
-    paymentDate: {type: DataTypes.DATE, allowNull: false},
+    paymentDate: {type: DataTypes.DATEONLY, allowNull: false},
     amount: {type: DataTypes.DECIMAL(10,2), allowNull: false},
 }, {
     sequelize, //Connection name

@@ -4,7 +4,7 @@ import "express-async-errors";
 import bodyParser from 'body-parser';
 
 import routes from './api/routes/index';
-import AppError from './utils/AppError';
+import AppError from './shared/utils/AppError';
 import { initdb } from './database/initdb';
 
 const app = express();
@@ -21,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use(errors());
 
 app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
-    console.log(err.stack);
+    console.log(err);
     try {
         res.status(err.getHttpCode()).send(err.getError());
     } catch (error) {

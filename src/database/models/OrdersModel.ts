@@ -28,9 +28,9 @@ class Orders extends Model<OrdersAttibutes, OrdersInput>{
 
 Orders.init({
     orderNumber: {type: DataTypes.INTEGER, primaryKey: true},
-    orderDate: {type: DataTypes.DATE, allowNull: false},
-    requiredDate: {type: DataTypes.DATE, allowNull: false},
-    shippedDate: {type: DataTypes.DATE},
+    orderDate: {type: DataTypes.DATEONLY, allowNull: false},
+    requiredDate: {type: DataTypes.DATEONLY, allowNull: false},
+    shippedDate: {type: DataTypes.DATEONLY},
     status: {type: DataTypes.STRING(15), allowNull: false},
     comments: {type: DataTypes.TEXT},
     customerNumber: {type: DataTypes.INTEGER, allowNull: false},

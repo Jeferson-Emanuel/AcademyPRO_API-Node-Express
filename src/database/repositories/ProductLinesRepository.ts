@@ -1,4 +1,4 @@
-import AppError from '../../utils/AppError';
+import AppError from '../../shared/utils/AppError';
 import model, {ProductLinesInput, ProductLinesOutput} from '../models/ProductLinesModel';
 import Products from '../models/ProductsModel';
 /* 
