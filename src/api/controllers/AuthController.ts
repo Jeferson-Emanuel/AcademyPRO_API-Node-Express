@@ -2,5 +2,9 @@ import { Request, Response } from 'express';
 import * as service from '../../services/AuthService';
 
 export const signUp = async (req: Request, res: Response) => {
-    res.status(201).send(await service.create(req.body));
+    res.status(201).send(await service.signUp(req.body));
+};
+
+export const signIn = async (req: Request, res: Response) => {
+    res.send(await service.signIn(req.body));
 };

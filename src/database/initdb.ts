@@ -22,7 +22,7 @@ export const initdb = async () => {
         // await Payments.sync({alter: true}),
         // await ProductLines.sync({alter: true}),
         // await Products.sync({alter: true}),
-        // await Users.sync({alter: true})
+        //await Users.sync({alter: true})
     ]).then(() => {
         console.log('Tables syncronized successfully.');
     });    

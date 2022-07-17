@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import { ensureIsAuthenticated } from '../middlewares/AuthMiddleware';
 import authentication from './AuthRoute';
 import customers from './CustomersRoute';
 import employees from './EmployeesRoute';
@@ -10,6 +11,10 @@ import productlines from './ProductLinesRoute';
 import products from './ProductsRoute';
 
 const routes = Router();
+
+routes.use('/auth', authentication);
+
+routes.use(ensureIsAuthenticated);
 
 routes.use('/customers', customers);
 routes.use('/employees', employees);

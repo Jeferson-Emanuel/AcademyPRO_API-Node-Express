@@ -1,8 +1,7 @@
-import { Model } from 'sequelize/types'
 import AppError from '../../shared/utils/AppError';
-import Users, {UsersHandler} from '../models/UsersModel'
+import Users, {UsersInput, UsersOutput} from '../models/UsersModel'
 
-export const findByID = async (email: string): Promise<UsersHandler> => {
+export const findByID = async (email: string): Promise<UsersOutput> => {
     const user = await Users.findByPk(email);
 
     if(!user){
@@ -12,8 +11,8 @@ export const findByID = async (email: string): Promise<UsersHandler> => {
     return user;
 };
 
-export const create = async (payload: UsersHandler): Promise<UsersHandler> => {
-    const {email, password} = payload;
+export const create = async (payload: UsersInput): Promise<UsersOutput> => {
+    const {email} = payload;
     const user = await Users.findByPk(email);
 
     if(user){
